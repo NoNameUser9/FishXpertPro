@@ -7,8 +7,8 @@
         "behavior": "peaceful",
         "aquariumSize": 50,
         "pH": 7,
-        "herd": "True",
-        "aeration": "True",
+        "herd": true,
+        "aeration": true,
         "waterPurity": 7
     },
     {
@@ -19,8 +19,8 @@
         "behavior": "peaceful",
         "aquariumSize": 50,
         "pH": 7,
-        "herd": "True",
-        "aeration": "True",
+        "herd": true,
+        "aeration": true,
         "waterPurity": 7
     },
     {
@@ -31,8 +31,8 @@
         "behavior": "aggressive",
         "aquariumSize": 30,
         "pH": 5,
-        "herd": "False",
-        "aeration": "False",
+        "herd": false,
+        "aeration": false,
         "waterPurity": 6
     },
     {
@@ -43,8 +43,8 @@
         "behavior": "aggressive",
         "aquariumSize": 30,
         "pH": 5,
-        "herd": "False",
-        "aeration": "False",
+        "herd": false,
+        "aeration": false,
         "waterPurity": 6
     }
 ]
