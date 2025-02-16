@@ -5,7 +5,8 @@ from collections import defaultdict
 
 
 class Fish(object):
-    def __init__(self, waterTemp: int = 0, food: str = "NaN", waterType: str = "NaN", behavior: str = "NaN", aquariumSize: int = 0, pH: float = 0.0, herd: bool = False, aeration: bool = False, waterPurity: int = 0):
+    def __init__(self, Name: str = "NaN", waterTemp: int = 0, food: str = "NaN", waterType: str = "NaN", behavior: str = "NaN", aquariumSize: int = 0, pH: float = 0.0, herd: bool = False, aeration: bool = False, waterPurity: int = 0):
+        self.Name = Name
         self.waterTemp = waterTemp
         self.food = food
         self.waterType = waterType
@@ -43,6 +44,47 @@ class App(tk.Frame):
         for fish in self.variables:
             print(fish.get())
 
+
+    def outputVariables(self, event, fishList: List[Fish]):
+        # decodedDataList = [Fish(**data) for data in self.variables]
+        dataDict: dict[str, str] = {}
+        matching_fish = []
+
+        typeList: List = list(fishList[0].__dict__.keys())
+
+        for item, type_t in zip(self.variables, typeList):
+            dataDict[type_t] = item.get()
+
+        # print(dataDict)
+
+        # for fish in dataList:
+        #     if all(str(value) in map(str, dataList) for value in dataList if value != "Нет данных"):
+        #         matching_fish.append(fish)
+
+        # # fishList
+        # if matching_fish:
+        #     print("Найденные рыбы:")
+        #     for fish in matching_fish:
+        #         print(fish)
+
+        for fish in fishList:
+            match = True
+            # print(fish.__dict__)
+            for key, value in dataDict.items():
+                # print(key, value)
+                # print(dataDict)
+                # print(getattr(fish, key, None))
+                if value is not None and str(getattr(fish, key, None)) != str(value):
+                    # print(f"getattr(fish, key, None): {getattr(fish, key, None)}, value: {value}")
+                    match = False
+                    # print("break")
+                    break
+            if match:
+                matching_fish.append(fish.Name)
+        # print("result:", matching_fish)
+        label.config(text="\n".join(matching_fish))
+
+
     @staticmethod
     def makeTypeList(fishList: List[Fish]):
         typeList: List = list(fishList[0].__dict__.keys())
@@ -63,7 +105,22 @@ class App(tk.Frame):
         # Заполняем экземпляр
         for fish in fishList:
             for key in typeList:
-                getattr(instance, key).append(getattr(fish, key))
+                value = getattr(fish, key)
+
+                # print(value)
+
+                # Приводим к bool, если исходное значение является bool
+                # if isinstance(value, bool):
+                value = str(value)  # Оставляем True/False
+                # elif isinstance(value, int):
+                #     value = int(value)  # Оставляем int
+                # elif isinstance(value, str):
+                #     value = str(value)  # Оставляем str
+
+                getattr(instance, key).append(value)
+
+        # for key in typeList:
+        #     print(getattr(instance, key))
 
         # Убираем дубликаты
         for key in typeList:
@@ -97,14 +154,11 @@ class App(tk.Frame):
 
 
 # TODO: Добавить поиск
-def fishFinder(fishObject: object):
+def fishFinder(fishObject: object, fishList: List[Fish]):
     print("Hi. Fish is found:")
     label.config(text="Hi. Fish is found:")
-
-    for key, value in fishObject.__dict__.items():
-        if value:
-            print(key, ":", value)
-            label.config(text=label.cget("text") + "\n" + key + ":" + value)
+    # print(fishObject[0].__dict__.keys())
+    keysList = fishList[0].__dict__.keys()
 
 
 if __name__ == "__main__":
@@ -115,6 +169,7 @@ if __name__ == "__main__":
     with open('data.json', 'r') as file:
         jsonData = json.load(file)
         fishList = [Fish(**data) for data in jsonData]
+
 
     instance = App.makeTypeList(fishList)
 
@@ -133,6 +188,6 @@ if __name__ == "__main__":
     label.pack()
 
     app = App(window, buttonItemList)
-    # tk.Button(frame2, text="Click Me", command=lambda: app.printVariables(buttonItemList)).pack(side="bottom")
-    tk.Button(frame2, text="Click Me", command=lambda: fishFinder(instance)).pack(side="bottom")
+    tk.Button(frame2, text="Click Me", command=lambda: app.outputVariables(buttonItemList, fishList)).pack(side="bottom")
+    # tk.Button(frame2, text="Click Me", command=lambda: fishFinder(instance, fishList)).pack(side="bottom")
     app.mainloop()
