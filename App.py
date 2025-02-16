@@ -75,12 +75,9 @@ class App(tk.Frame):
                 value = getattr(fish, key)
                 getattr(instance, key).append(value)
 
-        # for key in typeList:
-        #     print(getattr(instance, key))
-
         # Убираем дубликаты
         for key in typeList:
-            setattr(instance, key, list(set(getattr(instance, key))))
+            setattr(instance, key, list(dict.fromkeys(getattr(instance, key))))
 
         return instance
 
