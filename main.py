@@ -1,3 +1,4 @@
+import sys
 import tkinter as tk
 import json
 from Fish import Fish
@@ -9,7 +10,9 @@ if __name__ == "__main__":
     window.geometry('700x700')
     window.minsize(500, 500)
 
-    window.iconbitmap('data/fish.ico')
+    if sys.platform == 'win32':
+        window.iconbitmap('data/fish.ico')
+
     with open('data/data.json', 'r') as file:
         jsonData = json.load(file)
         fishList = [Fish(**data) for data in jsonData]
