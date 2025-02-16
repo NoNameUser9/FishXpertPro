@@ -1,5 +1,6 @@
 [
     {
+        "Name": "Tetra",
         "waterTemp": 25,
         "food": "omnivorous",
         "waterType": "salty",
@@ -11,6 +12,19 @@
         "waterPurity": 7
     },
     {
+        "Name": "Tetra",
+        "waterTemp": 25,
+        "food": "omnivorous",
+        "waterType": "salty",
+        "behavior": "peaceful",
+        "aquariumSize": 50,
+        "pH": 7,
+        "herd": true,
+        "aeration": true,
+        "waterPurity": 7
+    },
+    {
+        "Name": "Quadro",
         "waterTemp": 20,
         "food": "carnivorous",
         "waterType": "sweet",
@@ -22,6 +36,7 @@
         "waterPurity": 6
     },
     {
+        "Name": "Pika",
         "waterTemp": 21,
         "food": "carnivorous",
         "waterType": "sweet",
