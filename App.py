@@ -38,7 +38,7 @@ class App(tk.Frame):
 
         typeList: List = list(fishList[0].__dict__.keys())
 
-        for item, type_t in zip(variables, typeList):
+        for item, type_t in zip(variables[0:], typeList[1:]):
             dataDict[type_t] = item.get()
 
         for fish in fishList:
@@ -86,6 +86,9 @@ class App(tk.Frame):
         typeList: List = list(fishList[0].__dict__.keys())
         buttonItemList: List[tk.StringVar] = []
         for typeNow in typeList:
+            if typeNow == "Name":
+                continue
+
             frame1inner = tk.Frame(master=buttonListFrame, relief=tk.RAISED, borderwidth=2)
             frame1inner.pack(fill="both", expand=True)
 
