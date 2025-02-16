@@ -1,16 +1,7 @@
 import tkinter as tk
 import json
-from typing import List
 from Fish import Fish
 from App import App
-
-
-# # TODO: Добавить поиск
-# def fishFinder(fishObject: object, fishList: List[Fish]):
-#     print("Hi. Fish is found:")
-#     label.config(text="Hi. Fish is found:")
-#     # print(fishObject[0].__dict__.keys())
-#     keysList = fishList[0].__dict__.keys()
 
 
 if __name__ == "__main__":
@@ -32,8 +23,6 @@ if __name__ == "__main__":
     frame1.pack(fill="both", expand=True, side="left")
 
     buttonItemList = App.makeButtonItemList(fishList, instance, frame1)
-
-    print(*[item.get() for item in buttonItemList])
 
     frame2 = tk.Frame(master=mainFrame, relief=tk.RAISED, borderwidth=2)
     frame2.pack(fill="both", expand=True, side="right")
