@@ -41,13 +41,21 @@ class App(tk.Frame):
 
         typeList: List = list(fishList[0].__dict__.keys())
 
+
         for item, type_t in zip(variables[0:], typeList[1:]):
-            dataDict[type_t] = item.get()
+            if type(item) is not tuple:
+                dataDict[type_t] = item.get()
+            else:
+                dataDict[type_t] = (item[0].get(), item[1].get())
 
         for fish in fishList:
             match = True
             for key, value in dataDict.items():
-                if value is not None and str(getattr(fish, key, None)) != str(value):
+                if type(value) is tuple:
+                    if not (float(value[0]) <= float(getattr(fish, key, None)) <= float(value[1])):
+                        match = False
+                        break
+                elif value is not None and str(getattr(fish, key, None)) != str(value):
                     match = False
                     break
             if match:
@@ -128,7 +136,7 @@ class App(tk.Frame):
                     rs1 = RangeSliderH(frame1inner, [hVar1, hVar2], Width=400, Height=64, padX=17,
                                        min_val=min(options), max_val=max(options), show_value=True)
                     rs1.pack(anchor="w", side="right")
-                    buttonItemList.extend([hVar1, hVar2])
+                    buttonItemList.extend(zip([hVar1], [hVar2]))
                 except ValueError:
                     print(f"Ошибка: некорректные данные для {typeNow}")
 
